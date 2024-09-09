@@ -190,6 +190,7 @@ def perform_eigendecomposition(
                     GRADIENT_EIGENVALUES_NAME,
                 ),
             ]:
+                print(f"LOCAL: performing eigendecomposition for {covariance_name} in {module_name}")
                 original_dtype = covariance_factors[covariance_name][module_name].dtype
                 covariance_matrix = covariance_factors[covariance_name][module_name].to(
                     device=state.device,
