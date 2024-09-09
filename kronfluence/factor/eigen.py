@@ -190,7 +190,7 @@ def perform_eigendecomposition(
                     GRADIENT_EIGENVALUES_NAME,
                 ),
             ]:
-                print(f"LOCAL: performing eigendecomposition for {covariance_name} in {module_name}")
+                logging.info(f"Performing eigendecomposition for {covariance_name} in {module_name}")
                 original_dtype = covariance_factors[covariance_name][module_name].dtype
                 covariance_matrix = covariance_factors[covariance_name][module_name].to(
                     device=state.device,
@@ -198,20 +198,21 @@ def perform_eigendecomposition(
                 )
                 # Normalize covariance matrices.
                 covariance_matrix.div_(covariance_factors[num_processed_name][module_name].to(device=state.device))
-                # In cases where covariance matrices are not exactly symmetric due to numerical issues.
+                
                 try:
                     # In cases where covariance matrices are not exactly symmetric due to numerical issues.
                     covariance_matrix = covariance_matrix + covariance_matrix.t()
                     covariance_matrix.mul_(0.5)
                 except RuntimeError as e:
                     if "CUDA out of memory" in str(e):
-                        print(f"CUDA out of memory error occurred while processing:")
-                        print(f"  Covariance matrix: {covariance_name}")
-                        print(f"  Module: {module_name}")
-                        print(f"  Shape: {covariance_matrix.shape}")
-                        print(f"  Dtype: {covariance_matrix.dtype}")
-                        print(f"  Device: {covariance_matrix.device}")
+                        logging.error("CUDA out of memory error occurred while processing:")
+                        logging.error(f"  Covariance matrix: {covariance_name}")
+                        logging.error(f"  Module: {module_name}")
+                        logging.error(f"  Shape: {covariance_matrix.shape}")
+                        logging.error(f"  Dtype: {covariance_matrix.dtype}")
+                        logging.error(f"  Device: {covariance_matrix.device}")
                     raise
+
 
                 try:
                     eigenvalues, eigenvectors = torch.linalg.eigh(covariance_matrix)
