@@ -39,7 +39,7 @@ from kronfluence.utils.constants import (
     NUM_GRADIENT_COVARIANCE_PROCESSED,
     PARTITION_TYPE,
 )
-from kronfluence.utils.logger import TQDM_BAR_FORMAT
+from kronfluence.utils.logger import TQDM_BAR_FORMAT, get_logger
 from kronfluence.utils.state import State, no_sync, release_memory
 
 
@@ -164,6 +164,7 @@ def perform_eigendecomposition(
             The results are organized in nested dictionaries, where the first key is the name of the factor
             (e.g., activation eigenvector), and the second key is the module name.
     """
+    logger = get_logger(__name__)
     eigen_factors: FACTOR_TYPE = {}
     for factor_name in EIGENDECOMPOSITION_FACTOR_NAMES:
         eigen_factors[factor_name] = {}
@@ -190,7 +191,7 @@ def perform_eigendecomposition(
                     GRADIENT_EIGENVALUES_NAME,
                 ),
             ]:
-                logging.info(f"Performing eigendecomposition for {covariance_name} in {module_name}")
+                logger.info(f"Performing eigendecomposition for {covariance_name} in {module_name}")
                 original_dtype = covariance_factors[covariance_name][module_name].dtype
                 covariance_matrix = covariance_factors[covariance_name][module_name].to(
                     device=state.device,
@@ -205,12 +206,12 @@ def perform_eigendecomposition(
                     covariance_matrix.mul_(0.5)
                 except RuntimeError as e:
                     if "CUDA out of memory" in str(e):
-                        logging.error("CUDA out of memory error occurred while processing:")
-                        logging.error(f"  Covariance matrix: {covariance_name}")
-                        logging.error(f"  Module: {module_name}")
-                        logging.error(f"  Shape: {covariance_matrix.shape}")
-                        logging.error(f"  Dtype: {covariance_matrix.dtype}")
-                        logging.error(f"  Device: {covariance_matrix.device}")
+                        logger.error("CUDA out of memory error occurred while processing:")
+                        logger.error(f"  Covariance matrix: {covariance_name}")
+                        logger.error(f"  Module: {module_name}")
+                        logger.error(f"  Shape: {covariance_matrix.shape}")
+                        logger.error(f"  Dtype: {covariance_matrix.dtype}")
+                        logger.error(f"  Device: {covariance_matrix.device}")
                     raise
 
 
