@@ -6,10 +6,16 @@ from datasets import load_dataset
 import os
 import sys
 
-project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the parent directory (kronfluencer) to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-print("Python path in pipeline:", sys.path)  # This will help us debug
+print("Current file:", __file__)
+print("Project root:", project_root)
+print("Python path:", sys.path)
+print("Contents of project root:", os.listdir(project_root))
+
+
 
 from kron.analyzer import Analyzer
 from tasks import TinyStoriesTask

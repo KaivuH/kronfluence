@@ -16,13 +16,18 @@ from tasks import TinyStoriesTask
 import sys
 import os
 
-# Add the project root to Python path
-project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the parent directory (kronfluencer) to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-print("Python path:", sys.path)  # This will help us debug
+print("Current file:", __file__)
+print("Project root:", project_root)
+print("Python path:", sys.path)
+print("Contents of project root:", os.listdir(project_root))
 
-from pipeline import construct_tinystories_model, get_tinystories_dataset, prepare_model
+
+from kron.analyzer import prepare_model, Analyzer
+from kron.utils.common.factor_arguments import extreme_reduce_memory_factor_arguments
 from kron.utils.dataset import DataLoaderKwargs
 
 #%%
