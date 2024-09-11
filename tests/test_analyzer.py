@@ -3,9 +3,9 @@
 import pytest
 import torch
 
-from kronfluence.analyzer import Analyzer, prepare_model
-from kronfluence.arguments import FactorArguments, ScoreArguments
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.analyzer import Analyzer, prepare_model
+from kron.arguments import FactorArguments, ScoreArguments
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import prepare_test
 
 

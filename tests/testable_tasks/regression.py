@@ -10,7 +10,7 @@ from torch import nn
 from torch.utils import data
 from torch.utils.checkpoint import checkpoint_sequential
 
-from kronfluence.task import Task
+from kron.task import Task
 
 BATCH_TYPE = Tuple[torch.Tensor, torch.Tensor]
 

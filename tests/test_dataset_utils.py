@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from kronfluence.utils.dataset import (
+from kron.utils.dataset import (
     DistributedEvalSampler,
     DistributedSamplerWithStack,
     make_indices_partition,

@@ -6,10 +6,10 @@ import unittest
 import torch
 from torch.utils import data
 
-from kronfluence.analyzer import Analyzer, prepare_model
-from kronfluence.utils.common.factor_arguments import pytest_factor_arguments
-from kronfluence.utils.common.score_arguments import pytest_score_arguments
-from kronfluence.utils.constants import (
+from kron.analyzer import Analyzer, prepare_model
+from kron.utils.common.factor_arguments import pytest_factor_arguments
+from kron.utils.common.score_arguments import pytest_score_arguments
+from kron.utils.constants import (
     ALL_MODULE_NAME,
     COVARIANCE_FACTOR_NAMES,
     LAMBDA_FACTOR_NAMES,

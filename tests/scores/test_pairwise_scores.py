@@ -6,11 +6,11 @@ import pytest
 import torch
 from scipy.stats import spearmanr
 
-from kronfluence.arguments import ScoreArguments
-from kronfluence.utils.common.factor_arguments import pytest_factor_arguments
-from kronfluence.utils.common.score_arguments import pytest_score_arguments
-from kronfluence.utils.constants import ALL_MODULE_NAME
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.arguments import ScoreArguments
+from kron.utils.common.factor_arguments import pytest_factor_arguments
+from kron.utils.common.score_arguments import pytest_score_arguments
+from kron.utils.constants import ALL_MODULE_NAME
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import (
     ATOL,
     DEFAULT_FACTORS_NAME,

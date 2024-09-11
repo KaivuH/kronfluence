@@ -5,9 +5,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 
-from kronfluence.analyzer import Analyzer, prepare_model
-from kronfluence.utils.common.factor_arguments import pytest_factor_arguments
-from kronfluence.utils.common.score_arguments import pytest_score_arguments
+from kron.analyzer import Analyzer, prepare_model
+from kron.utils.common.factor_arguments import pytest_factor_arguments
+from kron.utils.common.score_arguments import pytest_score_arguments
 from tests.gpu_tests.pipeline import GpuTestTask, construct_test_mlp, get_mnist_dataset
 
 # Pick difficult cases where the dataset is not perfectly divisible by batch size.

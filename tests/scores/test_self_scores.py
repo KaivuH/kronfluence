@@ -5,14 +5,14 @@ from typing import Optional
 import pytest
 import torch
 
-from kronfluence.arguments import ScoreArguments
-from kronfluence.utils.common.factor_arguments import (
+from kron.arguments import ScoreArguments
+from kron.utils.common.factor_arguments import (
     default_factor_arguments,
     pytest_factor_arguments,
 )
-from kronfluence.utils.common.score_arguments import pytest_score_arguments
-from kronfluence.utils.constants import ALL_MODULE_NAME
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.utils.common.score_arguments import pytest_score_arguments
+from kron.utils.constants import ALL_MODULE_NAME
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import (
     ATOL,
     DEFAULT_FACTORS_NAME,

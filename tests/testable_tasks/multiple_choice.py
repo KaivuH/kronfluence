@@ -10,7 +10,7 @@ from torch import nn
 from torch.utils import data
 from transformers import AutoConfig, AutoModelForMultipleChoice, AutoTokenizer, logging
 
-from kronfluence.task import Task
+from kron.task import Task
 
 logging.set_verbosity_error()
 BATCH_TYPE = Dict[str, torch.Tensor]

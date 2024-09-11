@@ -3,14 +3,14 @@
 import pytest
 import torch
 
-from kronfluence.arguments import FactorArguments
-from kronfluence.utils.common.factor_arguments import pytest_factor_arguments
-from kronfluence.utils.constants import (
+from kron.arguments import FactorArguments
+from kron.utils.common.factor_arguments import pytest_factor_arguments
+from kron.utils.constants import (
     LAMBDA_FACTOR_NAMES,
     LAMBDA_MATRIX_NAME,
     NUM_LAMBDA_PROCESSED,
 )
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import (
     ATOL,
     DEFAULT_FACTORS_NAME,

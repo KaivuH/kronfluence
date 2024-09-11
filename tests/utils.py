@@ -7,9 +7,9 @@ from torch import nn
 from torch.utils import data
 from transformers import default_data_collator
 
-from kronfluence import Analyzer, prepare_model
-from kronfluence.task import Task
-from kronfluence.utils.exceptions import UnsupportableModuleError
+from kron import Analyzer, prepare_model
+from kron.task import Task
+from kron.utils.exceptions import UnsupportableModuleError
 from tests.testable_tasks.classification import (
     ClassificationTask,
     WrongClassificationTask,

@@ -10,18 +10,18 @@ from accelerate.utils import find_batch_size, set_seed
 from torch import nn
 from torch.utils.data import DataLoader
 
-from kronfluence.analyzer import Analyzer, prepare_model
-from kronfluence.arguments import FactorArguments
-from kronfluence.module.tracked_module import ModuleMode, TrackedModule
-from kronfluence.module.utils import (
+from kron.analyzer import Analyzer, prepare_model
+from kron.arguments import FactorArguments
+from kron.module.tracked_module import ModuleMode, TrackedModule
+from kron.module.utils import (
     finalize_iteration,
     get_tracked_module_names,
     set_mode,
     update_factor_args,
 )
-from kronfluence.task import Task
-from kronfluence.utils.constants import LAMBDA_MATRIX_NAME, PRECONDITIONED_GRADIENT_NAME
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.task import Task
+from kron.utils.constants import LAMBDA_MATRIX_NAME, PRECONDITIONED_GRADIENT_NAME
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import (
     ATOL,
     RTOL,

@@ -3,18 +3,18 @@
 import pytest
 import torch
 
-from kronfluence.utils.common.factor_arguments import (
+from kron.utils.common.factor_arguments import (
     default_factor_arguments,
     pytest_factor_arguments,
 )
-from kronfluence.utils.constants import (
+from kron.utils.constants import (
     ACTIVATION_COVARIANCE_MATRIX_NAME,
     COVARIANCE_FACTOR_NAMES,
     GRADIENT_COVARIANCE_MATRIX_NAME,
     NUM_ACTIVATION_COVARIANCE_PROCESSED,
     NUM_GRADIENT_COVARIANCE_PROCESSED,
 )
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import (
     ATOL,
     DEFAULT_FACTORS_NAME,

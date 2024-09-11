@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import torchvision
 from torch.utils.data import Dataset
 
-from kronfluence.task import Task
+from kron.task import Task
 
 BATCH_TYPE = Tuple[torch.Tensor, torch.Tensor]
 

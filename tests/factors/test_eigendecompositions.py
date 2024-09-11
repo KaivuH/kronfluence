@@ -3,13 +3,13 @@
 import pytest
 import torch
 
-from kronfluence.arguments import FactorArguments
-from kronfluence.utils.constants import (
+from kron.arguments import FactorArguments
+from kron.utils.constants import (
     ACTIVATION_EIGENVECTORS_NAME,
     EIGENDECOMPOSITION_FACTOR_NAMES,
     GRADIENT_EIGENVECTORS_NAME,
 )
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.utils.dataset import DataLoaderKwargs
 from tests.utils import DEFAULT_FACTORS_NAME, prepare_model_and_analyzer, prepare_test
 
 

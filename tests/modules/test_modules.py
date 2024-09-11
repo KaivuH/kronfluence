@@ -6,9 +6,9 @@ import pytest
 import torch
 from torch.utils.data import DataLoader
 
-from kronfluence.arguments import FactorArguments
-from kronfluence.module.tracked_module import ModuleMode
-from kronfluence.module.utils import set_mode, wrap_tracked_modules
+from kron.arguments import FactorArguments
+from kron.module.tracked_module import ModuleMode
+from kron.module.utils import set_mode, wrap_tracked_modules
 from tests.utils import prepare_test
 
 
