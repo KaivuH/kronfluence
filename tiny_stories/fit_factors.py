@@ -120,6 +120,8 @@ def main():
     factor_args.gradient_covariance_dtype = torch.bfloat16
     factor_args.per_sample_gradient_dtype = torch.bfloat16
     factor_args.lambda_dtype = torch.bfloat16
+    factor_args.eigendecomposition_dtype = torch.bfloat16  # Add this line
+
 
     analyzer.fit_all_factors(
         factors_name=factors_name,
