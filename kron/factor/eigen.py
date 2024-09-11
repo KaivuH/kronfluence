@@ -199,13 +199,20 @@ def perform_eigendecomposition(
                 )
                 # Normalize covariance matrices.
                 covariance_matrix.div_(covariance_factors[num_processed_name][module_name].to(device=state.device))
-                
+                    
                 try:
                     # In cases where covariance matrices are not exactly symmetric due to numerical issues.
                     covariance_matrix = covariance_matrix + covariance_matrix.t()
                     covariance_matrix.mul_(0.5)
+                    
+                    # Convert to float32 just for the eigh operation
+                    eigenvalues, eigenvectors = torch.linalg.eigh(covariance_matrix.to(torch.float32))
+                    
+                    # Convert results back to original dtype
+                    eigenvalues = eigenvalues.to(original_dtype)
+                    eigenvectors = eigenvectors.to(original_dtype)
                 except RuntimeError as e:
-                    print("CUDA out of memory error occurred while processing:")
+                    print("Error occurred while processing:")
                     print(f"  Covariance matrix: {covariance_name}")
                     print(f"  Module: {module_name}")
                     print(f"  Shape: {covariance_matrix.shape}")
@@ -213,16 +220,6 @@ def perform_eigendecomposition(
                     print(f"  Device: {covariance_matrix.device}")
                     raise
 
-
-                try:
-                    eigenvalues, eigenvectors = torch.linalg.eigh(covariance_matrix)
-                except Exception as e:  # pylint: disable=broad-exception-caught
-                    # If we get OOM error, release the memory and try again.
-                    if should_reduce_batch_size(exception=e):  # pylint: disable=no-else-continue
-                        release_memory()
-                        eigenvalues, eigenvectors = torch.linalg.eigh(covariance_matrix)
-                    else:
-                        raise
                 del covariance_matrix
                 eigen_factors[eigenvalues_name][module_name] = eigenvalues.contiguous().to(
                     dtype=original_dtype, device="cpu"
