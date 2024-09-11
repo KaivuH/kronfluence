@@ -20,10 +20,10 @@ import os
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-print("Current file:", __file__)
-print("Project root:", project_root)
-print("Python path:", sys.path)
-print("Contents of project root:", os.listdir(project_root))
+# print("Current file:", __file__)
+# print("Project root:", project_root)
+# print("Python path:", sys.path)
+# print("Contents of project root:", os.listdir(project_root))
 
 
 from kron.analyzer import prepare_model, Analyzer

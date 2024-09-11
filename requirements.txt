@@ -6,3 +6,5 @@ einconv>=0.1.0
 opt_einsum>=3.3.0
 safetensors>=0.4.2
 tqdm>=4.66.4
+transformers
+datasets

@@ -205,12 +205,12 @@ def perform_eigendecomposition(
                     covariance_matrix = covariance_matrix + covariance_matrix.t()
                     covariance_matrix.mul_(0.5)
                 except RuntimeError as e:
-                    logger.error("CUDA out of memory error occurred while processing:")
-                    logger.error(f"  Covariance matrix: {covariance_name}")
-                    logger.error(f"  Module: {module_name}")
-                    logger.error(f"  Shape: {covariance_matrix.shape}")
-                    logger.error(f"  Dtype: {covariance_matrix.dtype}")
-                    logger.error(f"  Device: {covariance_matrix.device}")
+                    print("CUDA out of memory error occurred while processing:")
+                    print(f"  Covariance matrix: {covariance_name}")
+                    print(f"  Module: {module_name}")
+                    print(f"  Shape: {covariance_matrix.shape}")
+                    print(f"  Dtype: {covariance_matrix.dtype}")
+                    print(f"  Device: {covariance_matrix.device}")
                     raise
 
 
