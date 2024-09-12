@@ -69,7 +69,7 @@ if __name__ == "__main__":
     print(Analyzer.get_module_summary(model))
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     dataset = get_tinystories_dataset()
-    task = TinyStoriesTask(tokenizer)
+    task = TinyStoriesTask()
 
     # Example of how to use the pipeline
     print(f"Dataset size: {len(dataset)}")

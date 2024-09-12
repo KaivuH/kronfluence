@@ -44,7 +44,7 @@ def parse_args():
     parser.add_argument(
         "--sample_size",
         type=int,
-        default=20,
+        default=None,
         help="Number of examples to sample from the dataset.",
     )
     parser.add_argument(

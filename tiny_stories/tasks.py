@@ -67,8 +67,6 @@ class TinyStoriesTask(Task):
             total_modules.append(f"transformer.h.{i}.mlp.c_fc")
             total_modules.append(f"transformer.h.{i}.mlp.c_proj")
 
-        total_modules.append("lm_head")  # Added language model head
-
         return total_modules
 
     def get_attention_mask(self, batch: BATCH_TYPE) -> torch.Tensor:
