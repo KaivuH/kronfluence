@@ -23,6 +23,14 @@ from kron.utils.dataset import DataLoaderKwargs
 torch.backends.cudnn.benchmark = True
 torch.backends.cuda.matmul.allow_tf32 = True
 
+INFLUENCE_RESULTS_DIR = os.path.join(project_root, "influence_results")
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
+
+def clear_cuda_cache():
+    torch.cuda.empty_cache()
+    import gc
+    gc.collect()
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Influence score computation on TinyStories dataset.")
 
@@ -79,7 +87,7 @@ def main():
         print(f"Sampled dataset size: {len(train_dataset)}")
 
     # Use a subset of the train dataset as the eval dataset
-    eval_dataset = train_dataset.select(range(min(100, len(train_dataset))))
+    eval_dataset = train_dataset.select(range(min(1000, len(train_dataset))))
 
     # Prepare the trained model.
     model = construct_tinystories_model()
@@ -92,11 +100,14 @@ def main():
     accelerator = Accelerator(kwargs_handlers=[kwargs])
     model = accelerator.prepare_model(model)
 
+    clear_cuda_cache()
+
     analyzer = Analyzer(
         analysis_name="tinystories",
         model=model,
         task=task,
         profile=args.profile,
+        output_dir=INFLUENCE_RESULTS_DIR,
     )
 
     dataloader_kwargs = DataLoaderKwargs(num_workers=8, collate_fn=default_data_collator, pin_memory=True)
@@ -117,7 +128,7 @@ def main():
         factors_name=args.factors_name,
         query_dataset=eval_dataset,
         train_dataset=train_dataset,
-        per_device_query_batch_size=1,
+        per_device_query_batch_size=25,
         per_device_train_batch_size=args.train_batch_size,
         overwrite_output_dir=True,
     )

@@ -131,8 +131,5 @@ def main():
         overwrite_output_dir=True,
     )
 
-
-
-
 if __name__ == "__main__":
     main()
