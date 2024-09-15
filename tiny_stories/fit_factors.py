@@ -27,8 +27,11 @@ sys.path.insert(0, project_root)
 
 
 from kron.analyzer import prepare_model, Analyzer
-from kron.utils.common.factor_arguments import extreme_reduce_memory_factor_arguments
+from kron.utils.common.factor_arguments import reduce_memory_factor_arguments
 from kron.utils.dataset import DataLoaderKwargs
+
+
+INFLUENCE_RESULTS_DIR = '/workspace/kronfluencer/influence_results'
 
 #%%
 
@@ -56,7 +59,7 @@ def parse_args():
     parser.add_argument(
         "--factor_batch_size",
         type=int,
-        default=4,
+        default=64,
         help="Batch size for computing influence factors.",
     )
     parser.add_argument(
@@ -98,15 +101,15 @@ def main():
         model=model,
         task=task,
         profile=args.profile,
+        output_dir=INFLUENCE_RESULTS_DIR,
     )
 
     dataloader_kwargs = DataLoaderKwargs(num_workers=8, collate_fn=default_data_collator, pin_memory=True)
     analyzer.set_dataloader_kwargs(dataloader_kwargs)
 
     factors_name = args.factors_name
-    factor_args = extreme_reduce_memory_factor_arguments(
+    factor_args = reduce_memory_factor_arguments(
         strategy=args.factor_strategy, 
-        module_partitions=2,  # Increase partitions to reduce memory per operation
         dtype=torch.bfloat16,  # Use bfloat16 for better numerical stability
     )
 

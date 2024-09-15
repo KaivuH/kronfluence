@@ -23,7 +23,7 @@ from kron.utils.dataset import DataLoaderKwargs
 torch.backends.cudnn.benchmark = True
 torch.backends.cuda.matmul.allow_tf32 = True
 
-INFLUENCE_RESULTS_DIR = os.path.join(project_root, "influence_results")
+INFLUENCE_RESULTS_DIR = '/workspace/kronfluencer/influence_results'
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 
 def clear_cuda_cache():
@@ -61,7 +61,7 @@ def parse_args():
     parser.add_argument(
         "--train_batch_size",
         type=int,
-        default=8,
+        default=128,
         help="Batch size for computing query gradients.",
     )
     parser.add_argument(
@@ -128,7 +128,7 @@ def main():
         factors_name=args.factors_name,
         query_dataset=eval_dataset,
         train_dataset=train_dataset,
-        per_device_query_batch_size=25,
+        per_device_query_batch_size=128,
         per_device_train_batch_size=args.train_batch_size,
         overwrite_output_dir=True,
     )

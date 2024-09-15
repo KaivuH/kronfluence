@@ -17,6 +17,7 @@ from kron.utils.dataset import DataLoaderKwargs
 from kron.utils.save import load_file, verify_models_equivalence
 
 
+
 def prepare_model(
     model: nn.Module,
     task: Task,
