@@ -4,7 +4,15 @@ from torch.utils.data import IterableDataset
 from grokking.grokk_replica.datasets import AbstractDataset
 from omegaconf import DictConfig, OmegaConf
 import hydra
-from kronfluence import Analyzer
+
+import os
+import sys
+
+# Add the parent directory (kronfluencer) to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+from kron.analyzer import Analyzer
 
 
 

@@ -9,10 +9,10 @@ from torch import nn
 from transformers import default_data_collator
 
 from pipeline import get_grokking_model, get_dataset, GroupDataset
-from kronfluence.analyzer import Analyzer, prepare_model
-from kronfluence.arguments import FactorArguments, ScoreArguments
-from kronfluence.task import Task
-from kronfluence.utils.dataset import DataLoaderKwargs
+from kron.analyzer import Analyzer, prepare_model
+from kron.arguments import FactorArguments, ScoreArguments
+from kron.task import Task
+from kron.utils.dataset import DataLoaderKwargs
 
 from omegaconf import DictConfig, OmegaConf
 import hydra

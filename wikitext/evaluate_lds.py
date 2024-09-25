@@ -5,13 +5,22 @@ import torch
 import tqdm
 from scipy.stats import spearmanr
 from pipeline import get_dataset, GroupDataset
-from kronfluence.analyzer import Analyzer
+
 
 from omegaconf import DictConfig, OmegaConf
 import hydra
 import matplotlib.pyplot as plt
 from scipy.stats import powerlaw
 import pandas as pd
+
+import os
+import sys
+
+# Add the parent directory (kronfluencer) to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+from kron.analyzer import Analyzer
 
 def create_dataframe_for_index(index, checkpoints, checkpoint_names, dataset):
     data = []

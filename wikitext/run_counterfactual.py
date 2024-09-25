@@ -9,7 +9,7 @@ from tueplots import markers
 
 from wikitext.pipeline import get_wikitext_dataset
 from wikitext.train import evaluate_model, train
-from kronfluence.analyzer import Analyzer
+from kron.analyzer import Analyzer
 
 
 def main():
