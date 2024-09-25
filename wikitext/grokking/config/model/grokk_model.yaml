@@ -9,5 +9,5 @@ transformer_config:
   block_repeats: 1
   dropout: 0.1
   pre_norm: true
-checkpoint_path: None
+checkpoint_path: /data/scratch/kaivuh/kronfluencer/models/checkpoints/model_step_10000.pth
 strict_load: true

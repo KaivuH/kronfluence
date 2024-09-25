@@ -18,6 +18,8 @@ from omegaconf import DictConfig, OmegaConf
 import hydra
 
 BATCH_TYPE = Dict[str, torch.Tensor]
+INFLUENCE_RESULTS_DIR = '/data/scratch/kaivuh/kronfluencer/influence_results'
+
 
 
 def parse_args():
@@ -127,9 +129,10 @@ def main(cfg : DictConfig):
     model = prepare_model(model, task)
 
     analyzer = Analyzer(
-        analysis_name="grokking",
+        analysis_name="wikitext",
         model=model,
         task=task,
+        output_dir=INFLUENCE_RESULTS_DIR,
     )
     # Configure parameters for DataLoader.
     dataloader_kwargs = DataLoaderKwargs(collate_fn=default_data_collator)
@@ -149,13 +152,13 @@ def main(cfg : DictConfig):
         dataset=train_dataset,
         per_device_batch_size=None,
         factor_args=factor_args,
-        overwrite_output_dir=False,
+        overwrite_output_dir=True,
         initial_per_device_batch_size_attempt=128,
     )
 
     # Compute pairwise scores.
     rank = args.query_gradient_rank if args.query_gradient_rank != -1 else None
-    score_args = ScoreArguments(query_gradient_rank=rank, query_gradient_svd_dtype=torch.float32)
+    score_args = ScoreArguments(query_gradient_svd_dtype=torch.float32)
     scores_name = f"{factor_args.strategy}_pairwise"
     if rank is not None:
         scores_name += f"_qlr{rank}"
@@ -171,7 +174,7 @@ def main(cfg : DictConfig):
         score_args=score_args,
         factors_name=args.factor_strategy,
         query_dataset=train_dataset,
-        query_indices=list(range(min([len(train_dataset), 2000]))),
+        query_indices=list(range(len(train_dataset))),
         train_dataset=train_dataset,
         per_device_query_batch_size=args.query_batch_size,
         per_device_train_batch_size=args.train_batch_size,
