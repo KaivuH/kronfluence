@@ -1,7 +1,7 @@
 import torch
 from grokking.grokk_replica.load_objs import load_item
 from torch.utils.data import IterableDataset
-from grokking.grokk_replica.datasets import AbstractDataset
+from kronfluencer.wikitext.grokking.grokk_replica.dataset_maker import AbstractDataset
 from omegaconf import DictConfig, OmegaConf
 import hydra
 

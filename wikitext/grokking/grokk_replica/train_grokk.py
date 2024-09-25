@@ -2,7 +2,7 @@ import torch
 from torch.optim import lr_scheduler
 from torch.utils import data
 from torch.utils.data import IterableDataset
-from datasets import AbstractDataset
+from dataset_maker import AbstractDataset
 from utils import combine_logs
 from torch.utils.data import DataLoader
 import torch.nn as nn
