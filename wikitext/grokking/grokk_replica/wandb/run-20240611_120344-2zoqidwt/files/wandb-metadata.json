@@ -1,0 +1,212 @@
+{
+    "os": "Linux-5.4.0-131-generic-x86_64-with-glibc2.27",
+    "python": "3.10.4",
+    "heartbeatAt": "2024-06-11T16:03:44.906364",
+    "startedAt": "2024-06-11T16:03:44.634618",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/fs01/home/bensonli/grokking/grokk_replica/train_grokk.py",
+    "codePathLocal": "train_grokk.py",
+    "codePath": "grokk_replica/train_grokk.py",
+    "git": {
+        "remote": "https://github.com/Sea-Snell/grokking.git",
+        "commit": "afcebbace2522d82f3837f5ff79cb147f793fd6e"
+    },
+    "email": "benson.li@mail.utoronto.ca",
+    "root": "/fs01/home/bensonli/grokking",
+    "host": "gpu046",
+    "username": "bensonli",
+    "executable": "/h/bensonli/.conda/envs/kron/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 2397.7698437499994,
+        "min": 800.0,
+        "max": 3000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400.0,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.974,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2402.119,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.997,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2389.903,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2401.045,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.027,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.148,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2368.886,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.014,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.993,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.005,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.006,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.998,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2397.84,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.003,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2403.014,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2397.52,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2407.253,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.379,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2389.842,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.079,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.004,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.291,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2369.991,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.956,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.384,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.973,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.999,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.996,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2400.001,
+            "min": 800.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2399.995,
+            "min": 800.0,
+            "max": 3000.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 819.2042961120605,
+            "used": 40.238990783691406
+        }
+    },
+    "gpu": "NVIDIA A40",
+    "gpu_count": 2,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA A40",
+            "memory_total": 48305799168
+        },
+        {
+            "name": "NVIDIA A40",
+            "memory_total": 48305799168
+        }
+    ],
+    "memory": {
+        "total": 188.59262466430664
+    }
+}

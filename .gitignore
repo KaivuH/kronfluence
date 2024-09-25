@@ -169,3 +169,6 @@ data/
 cache/
 *.pth
 *.pt
+
+
+wikitext/scores/
