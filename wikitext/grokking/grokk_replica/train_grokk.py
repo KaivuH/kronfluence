@@ -44,7 +44,18 @@ def train(config):
     dataset = load_item(config['dataset'])
     train_data = GroupDataset(dataset, 'train')
     val_data = GroupDataset(dataset, 'val')
-    model = load_item(config['model'], dataset.n_vocab, dataset.n_out, device)
+    try:
+        model = load_item(config['model'], dataset.n_vocab, dataset.n_out, device)
+    except Exception as e:
+        print('Failed to load model:', e)
+        model = 
+    
+    # Check if checkpoint path exists and load if it does
+    checkpoint_path = config['model'].get('checkpoint_path', None)
+    if checkpoint_path and os.path.exists(checkpoint_path):
+        checkpoint = torch.load(checkpoint_path)
+        model.load_state_dict(checkpoint, strict=config['model'].get('strict_load', True))
+    
     model.train()
     pytorch_total_params = sum(p.numel() for p in model.parameters())
     print(pytorch_total_params)
@@ -54,6 +65,12 @@ def train(config):
                               weight_decay=train_cfg['weight_decay'], 
                               betas=train_cfg['betas'])
     lr_schedule = torch.optim.lr_scheduler.LambdaLR(optim, lr_lambda=lambda s: min(s / train_cfg['warmup_steps'], 1))
+    
+    # Ensure checkpoint directory exists
+    checkpoint_dir = train_cfg.get('checkpoint_dir', '../checkpoints')
+    checkpoint_prefix = train_cfg.get('checkpoint_prefix', 'model_step')
+    os.makedirs(checkpoint_dir, exist_ok=True)
+
     step = 0
     for x, y in tqdm(train_dataloader):
         loss, logs = model.get_loss(x.to(device), y.to(device))
@@ -77,7 +94,8 @@ def train(config):
             model.train()
         step += 1
         if step % 1000 == 0:
-            torch.save(model.state_dict(), f"../checkpoints/model_step_{step}.pth")
+            checkpoint_path = os.path.join(checkpoint_dir, f"{checkpoint_prefix}_{step}.pth")
+            torch.save(model.state_dict(), checkpoint_path)
 
         if train_cfg['max_steps'] is not None and step >= train_cfg['max_steps']:
             break

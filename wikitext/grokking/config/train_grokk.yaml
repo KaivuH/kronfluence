@@ -21,6 +21,8 @@ train:
   eval_every: 10
   eval_batches: 8
   max_steps: 1e6
+  checkpoint_dir: "/data/scratch/kaivuh/kronfluencer/models/checkpoints"  # Add this line
+  checkpoint_prefix: "model_step"   # Add this line
 
 wandb:
   use_wandb: true

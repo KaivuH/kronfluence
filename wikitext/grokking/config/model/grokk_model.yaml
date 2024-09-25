@@ -9,5 +9,5 @@ transformer_config:
   block_repeats: 1
   dropout: 0.1
   pre_norm: true
-checkpoint_path: /h/bensonli/Grokking_Analysis/wikitext/checkpoints/model_step_20000.pth
+checkpoint_path: None
 strict_load: true
