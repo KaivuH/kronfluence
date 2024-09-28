@@ -42,7 +42,7 @@ class MultiHeadAttention(nn.Module):
         return attn_output, attn_matrix, (key_heads, val_heads)
 
 class TransformerBlock(nn.Module):
-    def __init__(self, heads, hidden_dim, attn_dim, intermediate_dim, dropout=0.1, pre_norm=True):
+    def __init__(self, heads, hidden_dim, attn_dim, intermediate_dim, dropout=0.0, pre_norm=True):
         super(TransformerBlock, self).__init__()
         self.pre_norm = pre_norm
         self.attn = MultiHeadAttention(heads, hidden_dim, attn_dim, dropout=dropout)

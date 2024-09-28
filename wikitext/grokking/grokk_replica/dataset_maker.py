@@ -1,7 +1,9 @@
 import abc
 import random
 from itertools import permutations
-from typing import Set
+from typing import Set, List, Tuple
+
+
 
 class AbstractDataset(abc.ABC):
     def __init__(self, group_elements1: Set, group_elements2: Set, frac_train: float, seed: int = 42):
@@ -80,3 +82,4 @@ class PermutationGroup(AbstractDataset):
 
     def fetch_output(self, a, b):
         return tuple([a[b[i]] for i in range(len(b))])
+
