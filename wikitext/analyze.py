@@ -105,6 +105,8 @@ class GrokkingModelingTask(Task):
 
         return total_modules
 
+# ... existing code ...
+
 @hydra.main(config_path="grokking/config", config_name="train_grokk")
 def main(cfg : DictConfig):
     args = parse_args()
@@ -115,75 +117,83 @@ def main(cfg : DictConfig):
     config = OmegaConf.to_container(cfg)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     dataset = get_dataset(config)
-    model = get_grokking_model(config, dataset, device)
-    # Prepare the trained model.
+    
+    # Prepare the datasets
     train_dataset = GroupDataset(dataset, 'train')
     eval_dataset = GroupDataset(dataset, 'val')
-    # checkpoint_path = "checkpoints/model_step_1000.pth"
-    # if not os.path.isfile(checkpoint_path):
-    #     raise ValueError(f"No checkpoint found at {os.path.abspath(checkpoint_path)}.")
-    # model.load_state_dict(torch.load(checkpoint_path))
 
-    # Define task and prepare model.
+    # Define task
     task = GrokkingModelingTask()
-    model = prepare_model(model, task)
 
-    analyzer = Analyzer(
-        analysis_name="wikitext",
-        model=model,
-        task=task,
-        output_dir=INFLUENCE_RESULTS_DIR,
-    )
-    # Configure parameters for DataLoader.
-    dataloader_kwargs = DataLoaderKwargs(collate_fn=default_data_collator)
-    analyzer.set_dataloader_kwargs(dataloader_kwargs)
+    # Define checkpoint steps and path template
+    checkpoint_steps = [1000, 4000, 6000, 8000]
+    checkpoint_path_template = "/data/scratch/kaivuh/kronfluencer/models/checkpoints/model_step_{}.pth"
 
-    # Compute influence factors.
-    factors_name = args.factor_strategy
-    factor_args = FactorArguments(strategy=args.factor_strategy)
-    if args.use_half_precision:
-        factor_args.activation_covariance_dtype = torch.bfloat16
-        factor_args.gradient_covariance_dtype = torch.bfloat16
-        factor_args.lambda_dtype = torch.bfloat16
-        factors_name += "_half"
+    for step in checkpoint_steps:
+        checkpoint_path = checkpoint_path_template.format(step)
+        config['model']['checkpoint_path'] = checkpoint_path
 
-    analyzer.fit_all_factors(
-        factors_name=factors_name,
-        dataset=train_dataset,
-        per_device_batch_size=None,
-        factor_args=factor_args,
-        overwrite_output_dir=True,
-        initial_per_device_batch_size_attempt=128,
-    )
+        # Load the model for this checkpoint
+        model = get_grokking_model(config, dataset, device)
+        model.load_state_dict(torch.load(checkpoint_path))
 
-    # Compute pairwise scores.
-    rank = args.query_gradient_rank if args.query_gradient_rank != -1 else None
-    score_args = ScoreArguments(query_gradient_svd_dtype=torch.float32)
-    scores_name = f"{factor_args.strategy}_pairwise"
-    if rank is not None:
-        scores_name += f"_qlr{rank}"
+        # Prepare model
+        model = prepare_model(model, task)
 
-    if args.use_half_precision:
-        score_args.per_sample_gradient_dtype = torch.bfloat16
-        score_args.score_dtype = torch.bfloat16
-        score_args.cached_activation_cpu_offload = True
-        scores_name += "_half"
+        analyzer = Analyzer(
+            analysis_name=f"wikitext_step{step}",
+            model=model,
+            task=task,
+            output_dir=INFLUENCE_RESULTS_DIR,
+        )
+        # Configure parameters for DataLoader.
+        dataloader_kwargs = DataLoaderKwargs(collate_fn=default_data_collator)
+        analyzer.set_dataloader_kwargs(dataloader_kwargs)
 
-    analyzer.compute_pairwise_scores(
-        scores_name=scores_name,
-        score_args=score_args,
-        factors_name=args.factor_strategy,
-        query_dataset=train_dataset,
-        query_indices=list(range(len(train_dataset))),
-        train_dataset=train_dataset,
-        per_device_query_batch_size=args.query_batch_size,
-        per_device_train_batch_size=args.train_batch_size,
-        overwrite_output_dir=True,
-    )
-    scores = analyzer.load_pairwise_scores(scores_name)["all_modules"]
-    logging.info(f"Scores shape: {scores.shape}")
+        # Compute influence factors.
+        factors_name = f"{args.factor_strategy}_step{step}"
+        factor_args = FactorArguments(strategy=args.factor_strategy)
+        if args.use_half_precision:
+            factor_args.activation_covariance_dtype = torch.bfloat16
+            factor_args.gradient_covariance_dtype = torch.bfloat16
+            factor_args.lambda_dtype = torch.bfloat16
+            factors_name += "_half"
 
+        analyzer.fit_all_factors(
+            factors_name=factors_name,
+            dataset=train_dataset,
+            per_device_batch_size=None,
+            factor_args=factor_args,
+            overwrite_output_dir=True,
+            initial_per_device_batch_size_attempt=128,
+        )
 
+        # Compute pairwise scores.
+        rank = args.query_gradient_rank if args.query_gradient_rank != -1 else None
+        score_args = ScoreArguments(query_gradient_svd_dtype=torch.float32)
+        scores_name = f"{factor_args.strategy}_pairwise_step{step}"
+        if rank is not None:
+            scores_name += f"_qlr{rank}"
+
+        if args.use_half_precision:
+            score_args.per_sample_gradient_dtype = torch.bfloat16
+            score_args.score_dtype = torch.bfloat16
+            score_args.cached_activation_cpu_offload = True
+            scores_name += "_half"
+
+        analyzer.compute_pairwise_scores(
+            scores_name=scores_name,
+            score_args=score_args,
+            factors_name=factors_name,
+            query_dataset=train_dataset,
+            query_indices=list(range(len(train_dataset))),
+            train_dataset=train_dataset,
+            per_device_query_batch_size=args.query_batch_size,
+            per_device_train_batch_size=args.train_batch_size,
+            overwrite_output_dir=True,
+        )
+        scores = analyzer.load_pairwise_scores(scores_name)["all_modules"]
+        logging.info(f"Scores shape for step {step}: {scores.shape}")
 
 if __name__ == "__main__":
     main()
